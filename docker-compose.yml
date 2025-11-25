@@ -43,8 +43,9 @@ services:
       - GF_AUTH_ANONYMOUS_ENABLED=true
       - GF_AUTH_ANONYMOUS_ORG_NAME=Main Org.
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer
-      - GF_PATHS_PROVISIONING=""
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
     volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
       - grafana_data:/var/lib/grafana
     networks:
       - monitoring
