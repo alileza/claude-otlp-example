@@ -4,31 +4,14 @@ This repository provides a complete monitoring stack for Claude Code telemetry d
 
 ![Claude Code Metrics Dashboard](dashboard-screenshot.png)
 
-## Features
-
-✅ **Real-time Claude Code Metrics:**
-- Active time tracking (CLI vs user time)
-- Cost monitoring by model (Haiku, Sonnet, etc.)
-- Token usage analysis (input/output/cache)
-- Session count tracking
-
-✅ **Pre-configured Dashboard:**
-- Professional Grafana dashboard with time series charts and stat panels
-- Anonymous access enabled (no login required)
-- Set as homepage for immediate visibility
-
-✅ **Production-ready Stack:**
-- OpenTelemetry Collector for data collection
-- Prometheus for metrics storage
-- Grafana for visualization
-
 ## Architecture
 
-The monitoring stack consists of three components:
-
-- **OpenTelemetry Collector**: Receives telemetry data from Claude Code and exports metrics to Prometheus
-- **Prometheus**: Scrapes and stores metrics from the OTEL Collector
-- **Grafana**: Visualizes metrics with Prometheus as the data source
+```mermaid
+graph LR
+    A[Claude Code] -->|OTLP gRPC| B[OpenTelemetry Collector]
+    B -->|metrics| C[Prometheus]
+    C -->|queries| D[Grafana Dashboard]
+```
 
 ## Quick Start
 
@@ -82,27 +65,3 @@ The dashboard displays the following Claude Code telemetry:
 - **Prometheus**: http://localhost:9099
 - **OTEL Collector metrics**: http://localhost:8889/metrics
 
-## Environment Variables Explained
-
-- `CLAUDE_CODE_ENABLE_TELEMETRY=1`: Enables telemetry collection in Claude Code
-- `OTEL_METRICS_EXPORTER=otlp`: Configures OpenTelemetry to export metrics via OTLP protocol
-- `OTEL_LOGS_EXPORTER=otlp`: Configures OpenTelemetry to export logs via OTLP protocol
-- `OTEL_EXPORTER_OTLP_PROTOCOL=grpc`: Uses gRPC protocol for OTLP communication
-- `OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317`: Points to the OTEL Collector gRPC endpoint
-- `OTEL_SERVICE_NAME="claude-code"`: Sets the service name for telemetry data
-- `OTEL_RESOURCE_ATTRIBUTES`: Additional resource attributes for better metric identification
-
-## Configuration Files
-
-- `otel-collector.yml`: OpenTelemetry Collector configuration
-- `prometheus.yml`: Prometheus scraping configuration
-- `docker-compose.yml`: Container orchestration
-- `grafana/provisioning/datasources/prometheus.yml`: Grafana datasource configuration
-
-## Data Flow
-
-1. Claude Code generates telemetry data when `CLAUDE_CODE_ENABLE_TELEMETRY=1` is set
-2. Telemetry data is sent to OTEL Collector via gRPC (port 4317)
-3. OTEL Collector processes the data and exposes metrics on port 8889
-4. Prometheus scrapes metrics from OTEL Collector every 30 seconds
-5. Grafana queries Prometheus to display metrics and create dashboards
