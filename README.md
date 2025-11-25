@@ -4,15 +4,6 @@ This repository provides a complete monitoring stack for Claude Code telemetry d
 
 ![Claude Code Metrics Dashboard](dashboard-screenshot.png)
 
-## Architecture
-
-```mermaid
-graph LR
-    A[Claude Code] -->|OTLP gRPC| B[OpenTelemetry Collector]
-    B -->|metrics| C[Prometheus]
-    C -->|queries| D[Grafana Dashboard]
-```
-
 ## Quick Start
 
 ### 1. Start the monitoring stack
@@ -65,3 +56,11 @@ The dashboard displays the following Claude Code telemetry:
 - **Prometheus**: http://localhost:9099
 - **OTEL Collector metrics**: http://localhost:8889/metrics
 
+## Architecture
+
+```mermaid
+graph LR
+    A[Claude Code] -->|OTLP gRPC| B[OpenTelemetry Collector]
+    B -->|metrics| C[Prometheus]
+    C -->|queries| D[Grafana Dashboard]
+```
