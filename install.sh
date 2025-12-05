@@ -105,8 +105,18 @@ case "${1:-start}" in
         echo "  Prometheus:        http://localhost:9099"
         echo "  OTEL Collector:    http://localhost:8889/metrics"
         echo ""
-        echo "Opening dashboard..."
-        open http://localhost:3009 2>/dev/null || xdg-open http://localhost:3009 2>/dev/null || true
+        echo -n "Waiting for Grafana to be ready..."
+        for i in {1..30}; do
+            if curl -s http://localhost:3009/api/health | grep -q "ok" 2>/dev/null; then
+                echo ""
+                print_status "Grafana is ready!"
+                echo "Opening dashboard..."
+                open http://localhost:3009 2>/dev/null || xdg-open http://localhost:3009 2>/dev/null || true
+                break
+            fi
+            echo -n "."
+            sleep 1
+        done
         ;;
     stop)
         stop_stack
