@@ -3,10 +3,10 @@
 set -e
 
 # Claude Code OpenTelemetry Monitoring - Remote Installer
-# Usage: curl -fsSL https://raw.githubusercontent.com/alileza/claudeotlp/main/install-remote.sh | bash
+# Usage: curl -fsSL https://raw.githubusercontent.com/alileza/claude-otlp-example/main/install-remote.sh | bash
 
-REPO_URL="https://github.com/alileza/claudeotlp.git"
-INSTALL_DIR="$HOME/.claudeotlp"
+REPO_URL="https://github.com/alileza/claude-otlp-example.git"
+INSTALL_DIR="$HOME/.claude-otlp"
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
