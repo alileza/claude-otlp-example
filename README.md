@@ -6,11 +6,19 @@ This repository provides a complete monitoring stack for Claude Code telemetry d
 
 ## Quick Start
 
-### 1. Start the monitoring stack
+### One-liner Install (macOS)
 
 ```bash
-git clone https://github.com/alileza/claude-otlp-example.git
-cd claude-otlp-example
+curl -fsSL https://raw.githubusercontent.com/alileza/claudeotlp/main/install-remote.sh | bash
+```
+
+This installs the monitoring stack as a daemon that starts automatically on login.
+
+### Manual Setup
+
+```bash
+git clone https://github.com/alileza/claudeotlp.git
+cd claudeotlp
 docker-compose up -d
 ```
 
