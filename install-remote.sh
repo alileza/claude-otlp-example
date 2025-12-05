@@ -31,7 +31,7 @@ fi
 print_status "Git found"
 
 if ! command -v docker &> /dev/null; then
-    print_error "Docker is not installed. Please install Docker Desktop for Mac."
+    print_error "Docker is not installed. Please install Docker Desktop."
     exit 1
 fi
 print_status "Docker found"
@@ -45,24 +45,23 @@ print_status "Docker daemon is running"
 # Clone or update repo
 echo ""
 if [ -d "$INSTALL_DIR" ]; then
-    print_warning "Installation directory exists. Updating..."
+    print_warning "Updating existing installation..."
     cd "$INSTALL_DIR"
     git pull --quiet
-    print_status "Updated repository"
+    print_status "Updated"
 else
     echo "Cloning repository..."
     git clone --quiet "$REPO_URL" "$INSTALL_DIR"
-    print_status "Cloned to $INSTALL_DIR"
+    print_status "Installed to $INSTALL_DIR"
 fi
 
-# Run install script
-echo ""
+# Start the stack
 cd "$INSTALL_DIR"
-./install.sh install
+./install.sh start
 
 echo ""
 echo "==============================================="
-echo "To configure Claude Code, add to your shell profile:"
+echo "To configure Claude Code telemetry, add to your shell profile:"
 echo ""
 echo "  export CLAUDE_CODE_ENABLE_TELEMETRY=1"
 echo "  export OTEL_METRICS_EXPORTER=otlp"
@@ -72,7 +71,7 @@ echo "  export OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317"
 echo "  export OTEL_SERVICE_NAME=\"claude-code\""
 echo ""
 echo "Management commands:"
-echo "  $INSTALL_DIR/install.sh status"
-echo "  $INSTALL_DIR/install.sh stop"
 echo "  $INSTALL_DIR/install.sh start"
-echo "  $INSTALL_DIR/install.sh uninstall"
+echo "  $INSTALL_DIR/install.sh stop"
+echo "  $INSTALL_DIR/install.sh status"
+echo "  $INSTALL_DIR/install.sh logs"
