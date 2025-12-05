@@ -114,7 +114,13 @@ install_service() {
     fi
 
     launchctl load "$PLIST_PATH"
-    print_status "Service installed and started"
+    print_status "Launchd service installed"
+
+    # Start containers immediately
+    echo "Starting containers..."
+    cd "$SCRIPT_DIR"
+    docker compose up -d
+    print_status "Containers started"
 }
 
 uninstall_service() {
